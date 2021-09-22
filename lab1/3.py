@@ -4,11 +4,11 @@ formula = sys.argv[1]
 sign = ['+', '-']
 
 is_formula_valid = True
-answer = None
+result = None
 length = len(formula)
 is_prev_num = True
 
-if length == 0 or (length == 1 and not formula[0].isdigit() or
+if length == 0 or (length >= 1 and not formula[0].isdigit() or
                    not formula[length - 1].isdigit()):
     is_formula_valid = False
 else:
@@ -20,6 +20,6 @@ else:
         is_prev_num = char.isdigit()
 
 if is_formula_valid:
-    answer = eval(formula)
+    result = eval(formula)
 
-print(f"({is_formula_valid}, {answer})")
+print(f"({is_formula_valid}, {result})")

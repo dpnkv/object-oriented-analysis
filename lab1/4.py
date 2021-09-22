@@ -1,9 +1,10 @@
 import sys
 
-capacity = int(sys.argv[1])
-weights = sys.argv[2::]
+max_weight = None
 
-def knapsack(capacity, weights):
+try:
+    capacity = int(sys.argv[1])
+    weights = sys.argv[2::]
     w = [1] + capacity * [0]
 
     for i in range(len(weights)):
@@ -13,6 +14,9 @@ def knapsack(capacity, weights):
     i = capacity
     while w[i] == 0:
         i -= 1
-    return i
+    max_weight = i
 
-print(knapsack(capacity, weights))
+except ValueError:
+    print("Values must be integers")
+
+print(max_weight)
