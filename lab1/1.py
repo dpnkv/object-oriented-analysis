@@ -1,10 +1,15 @@
 import sys
 
-exp = sys.argv
-exp.pop(0)
+expression = ""
+result = None
+for i in range(1, len(sys.argv)):
+    expression += sys.argv[i]
 
-expr = ""
-for i in range(0, len(sys.argv)):
-    expr += sys.argv[i]
+try:
+    result = eval(expression)
+except ZeroDivisionError:
+    print("Division by zero!")
+except (NameError, TypeError, ValueError, SyntaxError):
+    print("Invalid expression!")
 
-print(eval(expr))
+print("Result:", result)
