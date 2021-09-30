@@ -7,13 +7,13 @@ class Rectangle:
         if isinstance(length, float) and 0.0 < length < 20.0:
             self.__length = length
         else:
-            print("Length must be float and in range from 0.0 to 20.0")
+            raise ValueError("Length must be float and in range from 0.0 to 20.0")
 
     def set_width(self, width):
         if isinstance(width, float) and 0.0 < width < 20.0:
             self.__width = width
         else:
-            print("Width must be float and in range from 0.0 to 20.0")
+            raise ValueError("Width must be float and in range from 0.0 to 20.0")
 
     def get_length(self):
         return self.__length
