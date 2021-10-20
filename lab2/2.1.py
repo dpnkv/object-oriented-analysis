@@ -1,9 +1,15 @@
 class Product:
+    """A class that represents a product."""
     def __init__(self, price, description="", weigth=0):
         if not isinstance(price, float):
             raise TypeError("Price must be float")
         if price < 0:
             raise ValueError("Price must be non-negative")
+
+        if not isinstance(weigth, float):
+            raise TypeError("Weigth must be float")
+        if weigth < 0:
+            raise ValueError("Weigth must be non-negative")
 
         self.__price = price
         self.__description = description
@@ -45,9 +51,14 @@ class Product:
 
 
 class Customer:
+    """A class that represents a customer."""
     def __init__(self, name, surname):
-        if not isinstance(name, str) and isinstance(surname, str):
+        if not isinstance(name, str) or not isinstance(surname, str):
             raise TypeError("Name and surname must be strings")
+        if not name:
+            raise ValueError("Name must not be empty")
+        if not surname:
+            raise ValueError("Surname must not be empty")
 
         self.__name = name
         self.__surname = surname
@@ -73,32 +84,36 @@ class Customer:
         self.__surname = surname
 
 class Order:
-    def __init__(self, customer, *products):
+    """A class that represents an order."""
+    def __init__(self, customer=None, *products):
         if not isinstance(customer, Customer):
             raise TypeError("Customer must be a Customer object")
         if not all(isinstance(product, Product) for product in products):
             raise TypeError("Products must be Product object")
 
         self.__customer = customer
+        self.__products = products
+           
+    def get_total_price(self):
+        """Return total price of order."""
         self.__total_price = 0
-        for product in products:
+        for product in self.__products:
             self.__total_price += product.price
-
-    @property
-    def total_price(self):
         return self.__total_price
 
     @property
     def customer(self):
         return self.__customer
 
+
 bread = Product(15.5, "Just a bread", 0.5)
-butter = Product(34.12, "A normal butter", 0.4)
+butter = Product(30.1, "A normal butter", 0.4)
+bread.price = 13.2
 print(bread.price)
 print(bread.description)
 
 jack = Customer("Jack", "Hallnigan")
 
 order = Order(jack, bread, butter)
-print(f"Total price: {order.total_price}")
+print(order.get_total_price())
 print(f"Customer: {order.customer.name} {order.customer.surname}")

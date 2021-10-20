@@ -1,32 +1,43 @@
 from nltk.tokenize import sent_tokenize
+import os.path
 
 class TextProcessing:
+    """Class that do statistical processing of a text file."""
     def __init__(self, filename):
-        file = open(filename, "r")
-        data = file.read()
-        self.__characters = len(data)
-        self.__words = len(data.split())
-        self.__sentences = len(sent_tokenize(data))
-        self.__avg_sentence_len = self.__words / self.__sentences
+        self.filename = filename
 
-    @property
-    def characters(self):
-        return self.__characters
+    def get_chars(self):
+        """Get number of characters in a file."""
+        with open(self.filename, "r") as file:
+            if not os.path.isfile(self.filename):
+                raise FileNotFoundError
+            self.__characters = 0
+            for line in file.readlines():
+                self.__characters += len(line)
+            return self.__characters
 
-    @property
-    def words(self):
-        return self.__words
+    def get_words(self):
+        """Get number of words in a file."""
+        with open(self.filename, "r") as file:
+            if not os.path.isfile(self.filename):
+                raise FileNotFoundError
+            self.__words = 0
+            for line in file.readlines():
+                self.__words += len(line.split())
+            return self.__words
 
-    @property
-    def sentences(self):
-        return self.__sentences
+    def get_sentences(self):
+        """Get number of sentences in a file."""
+        with open(self.filename, "r") as file:
+            if not os.path.isfile(self.filename):
+                raise FileNotFoundError
+            self.__sentences = 0
+            for line in file.readlines():
+                self.__sentences += len(sent_tokenize(line))
+            return self.__sentences
 
-    @property
-    def avg_sentence_len(self):
-        return self.__avg_sentence_len
 
 text = TextProcessing("text.txt")
-print(f"Charactes: {text.characters}")
-print(f"Words: {text.words}")
-print(f"Sentences: {text.sentences}")
-print(f"Average length of sentence (words): {text.avg_sentence_len}")
+print(f"Charactes: {text.get_chars()}")
+print(f"Words: {text.get_words()}")
+print(f"Sentences: {text.get_sentences()}")
