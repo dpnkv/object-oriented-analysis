@@ -1,4 +1,6 @@
 import json
+import os
+import sys
 from datetime import datetime, date
 
 
@@ -98,8 +100,6 @@ def buy_ticket(is_student=False):
 
     today = datetime.today()
 
-    with open("events.json") as f:
-        events = json.load(f)
     i = 1
     for event in events:
         print(i, ": ", event["title"], event["date"], event["price"], "uah")
@@ -122,7 +122,6 @@ def buy_ticket(is_student=False):
 
     with open("purchased.json") as purchased_file:
         purchased_tickets = json.load(purchased_file)
-
     ticket_id = len(purchased_tickets) + 1
 
     if is_student:
@@ -146,7 +145,7 @@ def buy_ticket(is_student=False):
     with open("purchased.json", "w") as purchased_file:
         json.dump(purchased_tickets, purchased_file, indent=4)
 
-    # print("Successfully. Your unique number is", ticket.ticket_id)
+    print(f"Your ticket id: {ticket_id}")
 
 
 def view_ticket():
@@ -161,9 +160,10 @@ def view_ticket():
             print("Error:", error)
 
     if 0 < ticket_id <= len(purchased_tickets):
-        print(json.dumps(purchased_tickets[ticket_id - 1]))
+        ticket = purchased_tickets[ticket_id - 1]
+        print(f'#{ticket_id}: {ticket["title"]}, {ticket["date"]}, {ticket["price"]}')
     else:
-        print("Error: ticket with such id does not exist")
+        print("Ticket with such id does not exist")
 
 
 while True:
@@ -188,7 +188,8 @@ while True:
                 break
             elif not option:
                 print("Bye!")
+                sys.exit()
             else:
-                print("  Error: expected number from the menu. Try again.")
+                print("Try again.")
         except ValueError as error:
             print("Error:", error)

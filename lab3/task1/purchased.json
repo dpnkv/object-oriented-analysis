@@ -1,0 +1,23 @@
+[
+    {
+        "num": 1,
+        "title": "Python for Beginners",
+        "price": 22.0,
+        "date": "20.11.2021",
+        "purchased_date": "12.11.2021"
+    },
+    {
+        "num": 2,
+        "title": "Python for not-so-beginners",
+        "price": 20.0,
+        "date": "30.11.2021",
+        "purchased_date": "12.11.2021"
+    },
+    {
+        "num": 3,
+        "title": "Python for Experts",
+        "price": 50.0,
+        "date": "23.12.2021",
+        "purchased_date": "12.11.2021"
+    }
+]
