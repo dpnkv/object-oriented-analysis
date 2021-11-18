@@ -1,0 +1,18 @@
+[
+    {
+        "price": 85.0,
+        "tomato_sauce": 60,
+        "salami": 100,
+        "cheese": 120,
+        "tomatoes": 80
+    },
+    {
+        "price": 95.0,
+        "tomato_sauce": 60,
+        "salami": 100,
+        "cheese": 120,
+        "tomatoes": 80,
+        "pinapple": 50,
+        "capers": 50
+    }
+]
