@@ -1,7 +1,7 @@
-import json
-import os
-import sys
 from datetime import datetime, date
+import json
+import sys
+from coefficients import *
 
 
 class RegularTicket:
@@ -23,7 +23,7 @@ class RegularTicket:
 
     @property
     def num(self):
-        return self.num
+        return self.__num
 
     @num.setter
     def num(self, num):
@@ -35,7 +35,7 @@ class RegularTicket:
 
     @property
     def title(self):
-        return self.title
+        return self.__title
 
     @title.setter
     def title(self, title):
@@ -47,7 +47,7 @@ class RegularTicket:
 
     @property
     def price(self):
-        return self.price
+        return self.__price
 
     @price.setter
     def price(self, price):
@@ -79,19 +79,19 @@ class RegularTicket:
 class AdvanceTicket(RegularTicket):
     """Class for advance ticket (60 or more days)."""
     def __init__(self, num: int, title: str, price: float, event_date: date):
-        super().__init__(num, title, price * 0.6, event_date)
+        super().__init__(num, title, price * COEFF_ADVANCE, event_date)
 
 
 class LateTicket(RegularTicket):
     """Class for late ticket (10 or less days)."""
     def __init__(self, num: int, title: str, price: float, event_date: date):
-        super().__init__(num, title, price * 1.1, event_date)
+        super().__init__(num, title, price * COEFF_LATE, event_date)
 
 
 class StudentTicket(RegularTicket):
     """Class for student ticket."""
     def __init__(self, num: int, title: str, price: float, event_date: date):
-        super().__init__(num, title, price * 0.5, event_date)
+        super().__init__(num, title, price * COEFF_STUDENT, event_date)
 
 
 def buy_ticket(is_student=False):
@@ -148,7 +148,7 @@ def buy_ticket(is_student=False):
     print(f"Your ticket id: {ticket_id}")
 
 
-def view_ticket():
+def find_ticket():
     with open("purchased.json") as purchased_file:
         purchased_tickets = json.load(purchased_file)
 
@@ -168,10 +168,10 @@ def view_ticket():
 
 while True:
     print("\nMenu:\n"
-          "1 -- buy a ticket\n"
-          "2 -- buy a ticket for student\n"
-          "3 -- view my ticket by unique number\n"
-          "0 -- exit")
+          "1: buy a ticket\n"
+          "2: buy a ticket for student\n"
+          "3: view my ticket by unique number\n"
+          "0: exit")
 
     while True:
         try:
@@ -184,7 +184,7 @@ while True:
                 buy_ticket(is_student=True)
                 break
             elif option == 3:
-                view_ticket()
+                find_ticket()
                 break
             elif not option:
                 print("Bye!")
