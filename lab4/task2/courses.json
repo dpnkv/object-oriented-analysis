@@ -1,0 +1,19 @@
+[
+    {
+        "name": "Python and OOP",
+        "teacher": "Jack Nicholson",
+        "program": [
+            "Introduction",
+            "Differences",
+            "Similarities"
+        ]
+    },
+    {
+        "name": "Deep Python",
+        "teacher": "Jack Nicholson",
+        "program": [
+            "Short introduction",
+            "Some great techniques"
+        ]
+    }
+]

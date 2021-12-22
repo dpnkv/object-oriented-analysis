@@ -1,97 +1,5 @@
 import json
-from abc import ABC, abstractmethod
-
-
-class ICourse(ABC):
-    @property
-    @abstractmethod
-    def name(self):
-        pass
-
-    @name.setter
-    @abstractmethod
-    def name(self, name):
-        pass
-
-    @property
-    @abstractmethod
-    def program(self):
-        pass
-
-    @program.setter
-    @abstractmethod
-    def program(self, program):
-        pass
-
-
-class ITeacher(ABC):
-    @property
-    @abstractmethod
-    def name(self):
-        pass
-
-    @name.setter
-    @abstractmethod
-    def name(self, name):
-        pass
-
-
-class ICourseFactory(ABC):
-    @abstractmethod
-    def create_local_course(self, name, teacher, *program):
-        pass
-
-    @abstractmethod
-    def create_offsite_course(self, name, teacher, *program):
-        pass
-
-    @abstractmethod
-    def create_teacher(self, name):
-        pass
-
-
-class ILocalCourse(ICourse):
-    @property
-    @abstractmethod
-    def name(self):
-        pass
-
-    @ICourse.name.setter
-    @abstractmethod
-    def name(self, name):
-        pass
-
-    @property
-    @abstractmethod
-    def program(self):
-        pass
-
-    @ICourse.program.setter
-    @abstractmethod
-    def program(self, program):
-        pass
-
-
-class IOffsiteCourse(ICourse):
-    @property
-    @abstractmethod
-    def name(self):
-        pass
-
-    @ICourse.name.setter
-    @abstractmethod
-    def name(self, name):
-        pass
-
-    @property
-    @abstractmethod
-    def program(self):
-        pass
-
-    @ICourse.program.setter
-    @abstractmethod
-    def program(self, program):
-        pass
+from interfaces import ITeacher, ILocalCourse, IOffsiteCourse, ICourseFactory
 
 
 class LocalCourse(ILocalCourse):
@@ -139,8 +47,12 @@ class LocalCourse(ILocalCourse):
     def __str__(self):
         return f"Local: {self.name}, teacher: {self.teacher}, program: {self.program}"
 
-    def to_dict(self):
-        return json.loads(json.dumps(self, default=vars))
+    def __iter__(self):
+        for key, value in self.__dict__.items():
+            i = str(key).find("__")
+            if i != -1:
+                key = str(key)[i + 2:]
+            yield key, value
 
 
 class OffsiteCourse(IOffsiteCourse):
@@ -188,8 +100,12 @@ class OffsiteCourse(IOffsiteCourse):
     def __str__(self):
         return f"Offsite: {self.name}, teacher: {self.teacher}, program: {self.program}"
 
-    def to_dict(self):
-        return json.loads(json.dumps(self, default=vars))
+    def __iter__(self):
+        for key, value in self.__dict__.items():
+            i = str(key).find("__")
+            if i != -1:
+                key = str(key)[i + 2:]
+            yield key, value
 
 
 class Teacher(ITeacher):
@@ -224,19 +140,9 @@ class CourseFactory(ICourseFactory):
 
 
 def course_to_json(course):
+    """Function to serialize course to json."""
     with open("courses.json") as courses_file:
         courses = json.load(courses_file)
-    courses.append(course.to_dict())
+    courses.append(dict(course))
     with open("courses.json", 'w') as courses_file:
-        json.dump(courses, courses_file, indent=4)
-
-
-if __name__ == "__main__":
-    factory = CourseFactory()
-    teacher1 = factory.create_teacher("Jack Nicholson")
-    course1 = factory.create_local_course("Test", teacher1, "Topic1", "Topic2")
-    course2 = factory.create_offsite_course("Test2", teacher1, "Topic3", "Topic4")
-    print(course1)
-    print(course2)
-    course_to_json(course1)
-    course_to_json(course2)
+        json.dump(courses, courses_file, indent=4, default=str)
