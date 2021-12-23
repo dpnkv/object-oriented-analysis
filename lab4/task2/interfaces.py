@@ -29,7 +29,11 @@ class ICourse(ABC):
 
 
 class ITeacher(ABC):
-    """Interface of the teacher in software academy."""
+    """Interface of the teacher in software academy.
+
+    Attributes:
+        name: string representing teacher's name.
+    """
     @property
     @abstractmethod
     def name(self) -> str:
@@ -62,7 +66,13 @@ class ICourseFactory(ABC):
 
 
 class ILocalCourse(ICourse):
-    """Interface of local course in software academy."""
+    """Interface of local course in software academy.
+
+    Attributes:
+        name: string representing name of the course.
+        teacher: Teacher object that teaches on the course.
+        program: strings with course topics.
+    """
     @property
     @abstractmethod
     def name(self) -> str:
@@ -89,7 +99,12 @@ class ILocalCourse(ICourse):
 
 
 class IOffsiteCourse(ICourse):
-    """Interface of offsite course in software academy."""
+    """Interface of offsite course in software academy.
+
+    Attributes:
+        name: string representing name of the course.
+        teacher: Teacher object that teaches on the course.
+        program: strings with course topics."""
     @property
     @abstractmethod
     def name(self) -> str:
